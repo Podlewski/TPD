@@ -58,14 +58,25 @@ namespace TUI
                 }
             }
 
-            Console.Clear();
+            string again;
 
-            switch (task)
+            do
             {
-                case 1:
-                    Task1.Control.Task1(data);
-                    break;
-            }
+                Console.Clear();
+
+                switch (task)
+                {
+                    case 1:
+                        Task1.Control.Task1(data);
+                        break;
+                }
+
+                Console.Write("\nRun again with same data (Y/N)? ");
+                again = Console.ReadLine();
+
+            } while (again == "Y" || again == "y" || again == "Yes" || again == "yes" || again == "YES");
+
+
         }
     }
 }

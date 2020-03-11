@@ -6,12 +6,12 @@ namespace Task1
 {
     public static class Logic
     {
+        #region Helpers
+
         public static char SymbolFromIntCode(int number)
         {
             return (char)('A' + number);
         }
-
-        #region Helpers
 
         public static float HurwitzFactor()
         {
@@ -50,7 +50,7 @@ namespace Task1
             return factors;
         }
 
-        public static List<List<int>> TransposeMatrix(List<List<int>> matrix)
+        private static List<List<int>> TransposeMatrix(List<List<int>> matrix)
         {
             int rows = matrix[0].Count;
             int columns = matrix.Count;
@@ -72,7 +72,7 @@ namespace Task1
             return transposedMatrix;
         }
 
-        public static List<List<int>> OpportunityLossTable(List<List<int>> data)
+        private static List<List<int>> OpportunityLossTable(List<List<int>> data)
         {
             List<List<int>> opportunityLossTable = new List<List<int>>();
             List<int> maxValues = new List<int>();
@@ -93,49 +93,76 @@ namespace Task1
             return opportunityLossTable;
         }
 
+        private static string StringResult(int foundValue, List<int> data)
+        {
+            string result = "";
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data[i] == foundValue)
+                    result += SymbolFromIntCode(i) + ", ";
+            }
+
+            return result[0..^2];
+        }
+
+        private static string StringResult(float foundValue, List<float> data)
+        {
+            string result = "";
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data[i] == foundValue)
+                    result += SymbolFromIntCode(i) + ", ";
+            }
+
+            return result[0..^2];
+        }
+
         #endregion
 
-        public static char Minimax(List<List<int>> data)
+
+        public static string Minimax(List<List<int>> data)
         {
             List<int> mins = new List<int>();
 
             foreach (List<int> row in data)
                 mins.Add(row.Min());
 
-            return SymbolFromIntCode(mins.IndexOf(mins.Max()));
+            return StringResult(mins.Max(), mins);
         }
 
-        public static char Maximin(List<List<int>> data)
+        public static string Maximin(List<List<int>> data)
         {
             List<int> maxes = new List<int>();
 
             foreach (List<int> row in data)
                 maxes.Add(row.Max());
 
-            return SymbolFromIntCode(maxes.IndexOf(maxes.Min()));
+            return StringResult(maxes.Min(), maxes);
         }
 
-        public static char Maximax(List<List<int>> data)
+        public static string Maximax(List<List<int>> data)
         {
             List<int> maxes = new List<int>();
 
             foreach (List<int> row in data)
                 maxes.Add(row.Max());
 
-            return SymbolFromIntCode(maxes.IndexOf(maxes.Max()));
+            return StringResult(maxes.Max(), maxes);
         }
 
-        public static char Hurwitz(List<List<int>> data, float factor)
+        public static string Hurwitz(List<List<int>> data, float factor)
         {
             List<float> hurwitzValues = new List<float>();
 
             foreach (List<int> row in data)
                 hurwitzValues.Add((factor * row.Min()) + ((1 - factor) * row.Max()));
 
-            return SymbolFromIntCode(hurwitzValues.IndexOf(hurwitzValues.Max()));
+            return StringResult(hurwitzValues.Max(), hurwitzValues);
         }
 
-        public static char BayesLaplace(List<List<int>> data, List<float> factors)
+        public static string BayesLaplace(List<List<int>> data, List<float> factors)
         {
             List<float> bayesLaplaceValues = new List<float>();
 
@@ -149,10 +176,10 @@ namespace Task1
                 bayesLaplaceValues.Add(bayesLaplaceValue);
             }
 
-            return SymbolFromIntCode(bayesLaplaceValues.IndexOf(bayesLaplaceValues.Max()));
+            return StringResult(bayesLaplaceValues.Max(), bayesLaplaceValues);
         }
 
-        public static char Savage(List<List<int>> data)
+        public static string Savage(List<List<int>> data)
         {
             data = OpportunityLossTable(data);
 
@@ -161,7 +188,7 @@ namespace Task1
             foreach (List<int> row in data)
                 maxes.Add(row.Max());
 
-            return SymbolFromIntCode(maxes.IndexOf(maxes.Min()));
+            return StringResult(maxes.Min(), maxes);
         }
     }
 }
