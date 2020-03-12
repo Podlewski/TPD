@@ -50,49 +50,6 @@ namespace Task1
             return factors;
         }
 
-        private static List<List<int>> TransposeMatrix(List<List<int>> matrix)
-        {
-            int rows = matrix[0].Count;
-            int columns = matrix.Count;
-
-            List<List<int>> transposedMatrix = new List<List<int>>();
-
-            for (int i = 0; i < columns; i++)
-            {
-                List<int> tmpRow = new List<int>();
-
-                for (int j = 0; j < rows; j++)
-                {
-                    tmpRow.Add(matrix[j][i]);
-                }
-
-                transposedMatrix.Add(tmpRow);
-            }
-
-            return transposedMatrix;
-        }
-
-        private static List<List<int>> OpportunityLossTable(List<List<int>> data)
-        {
-            List<List<int>> opportunityLossTable = new List<List<int>>();
-            List<int> maxValues = new List<int>();
-
-            foreach (List<int> column in TransposeMatrix(data))
-                maxValues.Add(column.Max());
-
-            foreach (List<int> row in data)
-            {
-                List<int> opportunityLossRow = new List<int>();
-
-                for (int i = 0; i < row.Count; i++)
-                    opportunityLossRow.Add(maxValues[i] - row[i]);
-
-                opportunityLossTable.Add(opportunityLossRow);
-            }
-
-            return opportunityLossTable;
-        }
-
         private static string StringResult(int foundValue, List<int> data)
         {
             string result = "";
@@ -181,7 +138,7 @@ namespace Task1
 
         public static string Savage(List<List<int>> data)
         {
-            data = OpportunityLossTable(data);
+            data = Helper.Helper.OpportunityLossTable(data);
 
             List<int> maxes = new List<int>();
 

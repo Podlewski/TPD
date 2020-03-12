@@ -26,8 +26,6 @@ namespace Task1
 
         public static void Task1(List<List<int>> data)
         {
-            int choice;
-
             Console.WriteLine("Choose decision criteria: ");
             Console.WriteLine("\t0) Everything");
             Console.WriteLine("\t1) Minimax Criterion");
@@ -39,7 +37,7 @@ namespace Task1
 
             Console.Write("\nChoice: ");
 
-            choice = Int32.Parse(Console.ReadLine());
+            int choice = Int32.Parse(Console.ReadLine());
 
             Console.Clear();
             PrintData(data);
