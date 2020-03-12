@@ -118,130 +118,27 @@ namespace Helper
             return result;
         }
 
-        private static List<int> CorrectRemoved(List<int> removed)
+        public static bool IsMatrixNegative(ref List<List<int>> matrix,
+            out int increasingValue)
         {
-            List<int> correctedRemoved = new List<int>();
+            int minValue = matrix.Select(x => x.Min()).ToList().Min();
 
-            for(int i = 0; i < removed.Count; i++)
+            if (minValue < 0)
             {
-                correctedRemoved.Add(removed[i]);
-
-                for (int j = 0; j < i; j++)
+                for (int i = 0; i < matrix.Count; i++)
                 {
-                    if (removed[j] >= removed[i])
-                        correctedRemoved[i] += 1;
+                    for (int j = 0; j < matrix[0].Count; j++)
+                        matrix[i][j] += Math.Abs(minValue);
                 }
+
+                increasingValue = Math.Abs(minValue);
+                return true;
             }
-
-            return correctedRemoved;
-        }
-
-        public static bool AreThereAnyDominatedStrategies(ref List<List<int>> matrix,
-            out List<int> removedRows, out List<int> removedColumns)
-        {
-            bool dominatedStrategyWasRemoved = false;
-            bool dominatedStrategyWasRemovedInLoop;
-
-            removedRows = new List<int>();
-            removedColumns = new List<int>();
-
-            do
+            else
             {
-                dominatedStrategyWasRemovedInLoop = false;
-
-                List<int> dominatedRows = new List<int>();
-
-                for (int i = 0; i < matrix.Count; i++)
-                {
-                    Dictionary<int, int> dominantItemsCounter = new Dictionary<int, int>();
-                    HashSet<int> dominantStrategies = new HashSet<int>();
-
-                    for (int k = 0; k < matrix[i].Count; k++)
-                    {
-                        for (int j = 0; j < matrix.Count; j++)
-                        {
-                            if (matrix[i][k] <= matrix[j][k])
-                            {
-                                dominantItemsCounter.TryGetValue(j, out int currentCount);
-                                dominantItemsCounter[j] = currentCount + 1;
-
-                                if (matrix[i][k] < matrix[j][k])
-                                    dominantStrategies.Add(j);
-                            }
-                        }
-                    }
-
-                    for (int j = 0; j < matrix.Count; j++)
-                    {
-                        dominantItemsCounter.TryGetValue(j, out int currentCount);
-
-                        if (currentCount == matrix[i].Count && dominantStrategies.Contains(j))
-                            dominatedRows.Add(i);
-                    }
-                }
-
-                for (int i = 0; i < matrix.Count; i++)
-                {
-                    if (dominatedRows.Contains(i))
-                    {
-                        removedRows.Add(i);
-                        matrix.RemoveAt(i);
-                        dominatedStrategyWasRemoved = true;
-                        dominatedStrategyWasRemovedInLoop = true;
-                    }
-                }
-
-                List<int> dominatedColumns = new List<int>();
-
-                for (int k = 0; k < matrix[0].Count; k++)
-                {
-                    Dictionary<int, int> dominantItemsCounter = new Dictionary<int, int>();
-                    HashSet<int> dominantStrategies = new HashSet<int>();
-
-                    for (int i = 0; i < matrix.Count; i++)
-                    {
-                        for (int l = 0; l < matrix[0].Count; l++)
-                        {
-                            if (matrix[i][k] <= matrix[i][l])
-                            {
-                                dominantItemsCounter.TryGetValue(l, out int currentCount);
-                                dominantItemsCounter[l] = currentCount + 1;
-
-                                if (matrix[i][k] < matrix[i][l])
-                                    dominantStrategies.Add(l);
-                            }
-                        }
-                    }
-
-                    for (int l = 0; l < matrix[0].Count; l++)
-                    {
-                        dominantItemsCounter.TryGetValue(l, out int currentCount);
-
-                        if (currentCount == matrix.Count && dominantStrategies.Contains(l))
-                            dominatedColumns.Add(l);
-                    }
-                }
-
-                for (int k = 0; k < matrix[0].Count; k++)
-                {
-                    if (dominatedColumns.Contains(k))
-                    {
-                        removedColumns.Add(k);
-
-                        for (int i = 0; i < matrix.Count; i++)
-                            matrix[i].RemoveAt(k);
-
-                        dominatedStrategyWasRemoved = true;
-                        dominatedStrategyWasRemovedInLoop = true;
-                    }
-                }
-
-            } while (dominatedStrategyWasRemovedInLoop);
-
-            removedRows = CorrectRemoved(removedRows);
-            removedColumns = CorrectRemoved(removedColumns);
-
-            return dominatedStrategyWasRemoved;
+                increasingValue = 0;
+                return false;
+            }
         }
     }
 }
