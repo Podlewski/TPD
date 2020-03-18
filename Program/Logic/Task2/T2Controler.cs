@@ -20,13 +20,13 @@ namespace Logic
             if (AreThereAnyDominatedStrategies(ref matrix,
                 out List<int> removedRows, out List<int> removedColumns))
             {
-                PrintData(orginalMatrix);
+                PrintData2(orginalMatrix);
                 Console.WriteLine("Matrix after removing dominated strategies:");
             }
 
             List<int> rowIndexes = GetIndexes(orginalMatrix.Count, removedRows);
             List<int> columnIndexes = GetIndexes(orginalMatrix[0].Count, removedColumns);
-            PrintData(matrix, rowIndexes, columnIndexes);
+            PrintData2(matrix, rowIndexes, columnIndexes);
 
             if (DoesTheMatrixHaveTheSaddlePoint(matrix, out int playerADecision, out int playerBDecision))
             {

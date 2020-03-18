@@ -26,7 +26,7 @@ namespace Logic
             int choice = Int32.Parse(Console.ReadLine());
 
             Console.Clear();
-            PrintData(matrix);
+            PrintData1(matrix);
 
             switch (choice)
             {

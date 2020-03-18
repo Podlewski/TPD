@@ -6,7 +6,7 @@ namespace Logic
 {
     public static class Helper
     {
-        public static void PrintData(List<List<int>> data)
+        public static void PrintData1(List<List<int>> data)
         {
             char symbol = 'A';
 
@@ -24,7 +24,7 @@ namespace Logic
             Console.WriteLine();
         }
 
-        public static void PrintData(List<List<int>> matrix, List<int> rowIndexes = null,
+        public static void PrintData2(List<List<int>> matrix, List<int> rowIndexes = null,
             List<int> columnIndexes = null)
         {
             for (int i = 0; i < matrix[0].Count; i++)
