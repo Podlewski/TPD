@@ -2,10 +2,28 @@
 using System.Collections.Generic;
 using System;
 
-namespace Helper
+namespace Logic
 {
     public static class Helper
     {
+        public static void PrintData(List<List<int>> data)
+        {
+            char symbol = 'A';
+
+            foreach (List<int> row in data)
+            {
+                Console.Write(symbol);
+
+                foreach (int value in row)
+                    Console.Write("\t" + value);
+
+                Console.WriteLine();
+                symbol = (char)(symbol + 1);
+            }
+
+            Console.WriteLine();
+        }
+
         public static void PrintData(List<List<int>> matrix, List<int> rowIndexes = null,
             List<int> columnIndexes = null)
         {

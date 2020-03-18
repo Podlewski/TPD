@@ -10,11 +10,11 @@ namespace TUI
         private const int maxPosibbleTask = 2;
 
         private static string path;
-        private static List<List<int>> data;
+        private static List<List<int>> matrix;
 
         static void ChooseTask()
         {
-            if(maxPosibbleTask > 1)
+            if (maxPosibbleTask > 1)
             {
                 string text = "Choose task to process, from 1 to " + maxPosibbleTask.ToString() + " (or press Enter to open last): ";
                 string output;
@@ -27,7 +27,7 @@ namespace TUI
 
                 else
                     task = Int32.Parse(output);
-                    
+
             }
         }
 
@@ -37,23 +37,25 @@ namespace TUI
             path = Console.ReadLine();
 
             if (path == "")
-                path = "..//../..//..//Data//Task" + task + ".txt";
+                path = "..//../..//Data//Task" + task + ".txt";
 
-            data = new List<List<int>>();
+            matrix = new List<List<int>>();
 
-            using TextReader reader = File.OpenText(path);
-            string wholeFile = reader.ReadToEnd();
-            string[] lines = wholeFile.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-
-            foreach (string line in lines)
+            using (TextReader reader = File.OpenText(path))
             {
-                List<int> tmpRow = new List<int>();
-                string[] numbers = line.Split(' ');
+                string wholeFile = reader.ReadToEnd();
+                string[] lines = wholeFile.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
-                foreach (string number in numbers)
-                    tmpRow.Add(int.Parse(number));
+                foreach (string line in lines)
+                {
+                    List<int> tmpRow = new List<int>();
+                    string[] numbers = line.Split(' ');
 
-                data.Add(tmpRow);
+                    foreach (string number in numbers)
+                        tmpRow.Add(int.Parse(number));
+
+                    matrix.Add(tmpRow);
+                }
             }
         }
 
@@ -64,11 +66,11 @@ namespace TUI
             switch (task)
             {
                 case 1:
-                    Task1.Control.Task1(data);
+                    Logic.Controler.Task1(matrix);
                     break;
 
                 case 2:
-                    Task2.Control.Task2(data);
+                    Logic.Controler.Task2(matrix);
                     break;
             }
         }

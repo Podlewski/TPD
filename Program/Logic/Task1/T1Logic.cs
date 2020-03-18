@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Task1
+namespace Logic
 {
-    public static class Logic
+    public static partial class Logic
     {
         #region Helpers
 
@@ -60,7 +60,7 @@ namespace Task1
                     result += SymbolFromIntCode(i) + ", ";
             }
 
-            return result[0..^2];
+            return result.Substring(0,result.Length-2);
         }
 
         private static string StringResult(float foundValue, List<float> data)
@@ -73,7 +73,7 @@ namespace Task1
                     result += SymbolFromIntCode(i) + ", ";
             }
 
-            return result[0..^2];
+            return result.Substring(0, result.Length - 2);
         }
 
         #endregion
@@ -138,7 +138,7 @@ namespace Task1
 
         public static string Savage(List<List<int>> data)
         {
-            data = Helper.Helper.OpportunityLossTable(data);
+            data = Helper.OpportunityLossTable(data);
 
             List<int> maxes = new List<int>();
 

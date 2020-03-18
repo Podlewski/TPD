@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System;
 
-namespace Task2
+using static Logic.Helper;
+
+using Microsoft.SolverFoundation.Services;
+
+namespace Logic
 {
-    public static class Logic
+    public static partial class Logic
     {
         public static bool DoesTheMatrixHaveTheSaddlePoint(List<List<int>> matrix,
             out int playerADecision, out int playerBDecision)
@@ -25,7 +29,7 @@ namespace Task2
             List<int> columnMaxes = new List<int>();
             List<int> columnIndexes = new List<int>();
 
-            foreach (List<int> column in Helper.Helper.TransposeMatrix(matrix))
+            foreach (List<int> column in TransposeMatrix(matrix))
             {
                 columnMaxes.Add(column.Max());
                 columnIndexes.Add(column.IndexOf(column.Max()));
@@ -170,10 +174,93 @@ namespace Task2
             return dominatedStrategyWasRemoved;
         }
 
-        public static int PlayerAStrategy(List<List<int>> matrix)
+        public static Tuple<double, List<double>> PlayerAStrategy(List<List<int>> matrix)
         {
+            SolverContext context = SolverContext.GetContext();
+            context.ClearModel();
+            Model model = context.CreateModel();
+            List<Decision> decicionList = new List<Decision>();
 
-            return 0;
+            for (int i = 0; i < matrix.Count; i++)
+                decicionList.Add(new Decision(Domain.RealNonnegative, "A" + i));
+
+            foreach (var decision in decicionList)
+                model.AddDecision(decision);
+
+            for (int j = 0; j < matrix[0].Count; j++)
+            {
+                SumTermBuilder columnSum = new SumTermBuilder(decicionList.Count);
+
+                for (int i = 0; i < decicionList.Count; i++)
+                    columnSum.Add(decicionList[i] * matrix[i][j]);
+
+                model.AddConstraint("con" + j, columnSum.ToTerm() >= 1);
+            }
+
+            SumTermBuilder decisionSum = new SumTermBuilder(decicionList.Count);
+
+            for (int i = 0; i < decicionList.Count; i++)
+            {
+                model.AddConstraint("nonneg" + i, decicionList[i] >= 0);
+                decisionSum.Add(decicionList[i]);
+            }
+
+            model.AddGoal("min", GoalKind.Minimize, decisionSum.ToTerm());
+
+            Solution solution = context.Solve(new SimplexDirective());
+            
+            double gameValue = 1 / solution.Goals.First().ToDouble();
+            List<double> parsedDecicionList = new List<double>();
+
+            foreach (var decision in decicionList)
+                parsedDecicionList.Add(decision.ToDouble() * gameValue);
+
+            return new Tuple<double, List<double>>(gameValue, parsedDecicionList);
+        }
+
+        public static Tuple<double, List<double>> PlayerBStrategy(List<List<int>> matrix)
+        {
+            SolverContext context = SolverContext.GetContext();
+            context.ClearModel();
+            Model model = context.CreateModel();
+
+            List<Decision> decicionList = new List<Decision>();
+
+            for (int j = 0; j < matrix[0].Count; j++)
+                decicionList.Add(new Decision(Domain.RealNonnegative, "B" + j));
+
+            foreach (var decision in decicionList)
+                model.AddDecision(decision);
+
+            for (int i = 0; i < matrix.Count; i++)
+            {
+                SumTermBuilder rowSum = new SumTermBuilder(decicionList.Count);
+
+                for (int j = 0; j < decicionList.Count; j++)
+                    rowSum.Add(decicionList[j] * matrix[i][j]);
+
+                model.AddConstraint("con" + i, rowSum.ToTerm() <= 1);
+            }
+
+            SumTermBuilder decisionSum = new SumTermBuilder(decicionList.Count);
+
+            for (int j = 0; j < decicionList.Count; j++)
+            {
+                model.AddConstraint("nonneg" + j, decicionList[j] >= 0);
+                decisionSum.Add(decicionList[j]);
+            }
+
+            model.AddGoal("max", GoalKind.Maximize, decisionSum.ToTerm());
+
+            Solution solution = context.Solve(new SimplexDirective());
+
+            double gameValue = 1 / solution.Goals.First().ToDouble();
+            List<double> parsedDecicionList = new List<double>();
+
+            foreach (var decision in decicionList)
+                parsedDecicionList.Add(decision.ToDouble() * gameValue);
+
+            return new Tuple<double, List<double>>(gameValue, parsedDecicionList);
         }
     }
 }
