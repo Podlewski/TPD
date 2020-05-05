@@ -70,6 +70,23 @@ namespace Logic
             return copiedMatrix;
         }
 
+        public static List<List<int>> MatrixToInteger(List<List<string>> matrix)
+        {
+            List<List<int>> intMatrix = new List<List<int>>();
+
+            foreach (List<string> line in matrix)
+            {
+                List<int> tmpRow = new List<int>();
+
+                foreach (string number in line)
+                    tmpRow.Add(int.Parse(number));
+
+                intMatrix.Add(tmpRow);
+            }
+
+            return intMatrix;
+        }
+
         public static List<List<int>> TransposeMatrix(List<List<int>> matrix)
         {
             int rows = matrix[0].Count;

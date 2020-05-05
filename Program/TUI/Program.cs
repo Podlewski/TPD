@@ -7,10 +7,10 @@ namespace TUI
     class Program
     {
         private static int task = 1;
-        private const int maxPosibbleTask = 2;
+        private const int maxPosibbleTask = 3;
 
         private static string path;
-        private static List<List<int>> matrix;
+        private static List<List<string>> matrix;
 
         static void ChooseTask()
         {
@@ -39,7 +39,7 @@ namespace TUI
             if (path == "")
                 path = "..//../..//Data//Task" + task + ".txt";
 
-            matrix = new List<List<int>>();
+            matrix = new List<List<string>>();
 
             using (TextReader reader = File.OpenText(path))
             {
@@ -48,11 +48,11 @@ namespace TUI
 
                 foreach (string line in lines)
                 {
-                    List<int> tmpRow = new List<int>();
+                    List<string> tmpRow = new List<string>();
                     string[] numbers = line.Split(' ');
 
                     foreach (string number in numbers)
-                        tmpRow.Add(int.Parse(number));
+                        tmpRow.Add(number);
 
                     matrix.Add(tmpRow);
                 }
@@ -72,6 +72,10 @@ namespace TUI
                 case 2:
                     Logic.Controler.Task2(matrix);
                     break;
+
+                case 3:
+                    Logic.Controler.Task3(matrix);
+                    break;
             }
         }
 
@@ -84,7 +88,7 @@ namespace TUI
             Console.WriteLine("\t3) Close program");
 
             Console.Write("\nChoice: ");
-            return Int32.Parse(Console.ReadLine());
+            return int.Parse(Console.ReadLine());
         }
 
         static void Main()
@@ -106,8 +110,6 @@ namespace TUI
                 startingStep = GetStartingStep();
 
             } while (startingStep <= 2);
-
-
         }
     }
 }

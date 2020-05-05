@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Microsoft.SolverFoundation.Services;
-
 using static Logic.Helper;
 using static Logic.Logic;
 
@@ -10,9 +8,10 @@ namespace Logic
 {
     public partial class Controler
     {
-        public static void Task2(List<List<int>> orginalMatrix)
+        public static void Task2(List<List<string>> stringMatrix)
         {
             Console.Clear();
+            List<List<int>> orginalMatrix = MatrixToInteger(stringMatrix);
             List<List<int>> matrix = DeepCopyMatrix(orginalMatrix);
 
             Console.WriteLine("Orginal matrix:");

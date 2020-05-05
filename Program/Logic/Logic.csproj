@@ -52,6 +52,10 @@
     <Compile Include="Task1\T1Logic.cs" />
     <Compile Include="Task2\T2Controler.cs" />
     <Compile Include="Task2\T2Logic.cs" />
+    <Compile Include="Task3\Activity.cs" />
+    <Compile Include="Task3\Path.cs" />
+    <Compile Include="Task3\T3Controler.cs" />
+    <Compile Include="Task3\T3Logic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

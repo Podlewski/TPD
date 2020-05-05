@@ -8,10 +8,11 @@ namespace Logic
 {
     public partial class Controler
     {
-
-
-        public static void Task1(List<List<int>> matrix)
+        public static void Task1(List<List<string>> stringMatrix)
         {
+            Console.Clear();
+            List<List<int>> matrix = MatrixToInteger(stringMatrix);
+
             Console.WriteLine("Choose decision criteria: ");
             Console.WriteLine("\t0) Everything");
             Console.WriteLine("\t1) Minimax Criterion");
