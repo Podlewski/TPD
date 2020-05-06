@@ -12,10 +12,25 @@ Program dokonujący wyboru optymalnej decyzji na określonym całkowitym obszarz
 
 1. Kryterium Minimaks
 2. Kryterium Walda (Maksimin)
-3. Kryterium Optymistyczne (Maksimaks) 
+3. Kryterium Optymistyczne (Maksimaks)
 4. Kryterium Hurwicza
 5. Kryterium Bayesa-Laplace'a
 6. Kryterium Savage'a
+
+## Zadanie 2
+
+Program rozwiązujący grę dwuosobą o sumie zero dla macierzy wypłat metodą programowania liniowego:
+
+1. Sprawdzenie, czy istnieje rozwiązanie w postaci punktu siodłowego w oparciu o proste kryterium decyzyjne (kryterium Walda)
+2. Sprawdzenie, czy w macierzy wypłat nie pojawiają się zdominowane strategie, tj. zdominowane wiersze i kolumny macierzy
+3. Ostatecznie rozwiązanie gry w oparciu o model optymalizacji liniowej
+
+## Zadanie 3
+
+Program rozwiązujący problem metodą programowania sieciowego:
+
+1. Wyznaczyć ścieżkę krytyczną
+2. Ustalić czas realizacji projektu (długośc scieżki krytycznej)
 
 ---
 
