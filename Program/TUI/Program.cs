@@ -6,8 +6,8 @@ namespace TUI
 {
     class Program
     {
-        private static int task = 1;
-        private const int maxPosibbleTask = 3;
+        private static int task = 0;
+        private const int maxPosibbleTask = 4;
 
         private static string path;
         private static List<List<string>> matrix;
@@ -75,6 +75,10 @@ namespace TUI
 
                 case 3:
                     Logic.Controler.Task3(matrix);
+                    break;
+
+                case 4:
+                    Logic.Controler.Task4(matrix);
                     break;
             }
         }

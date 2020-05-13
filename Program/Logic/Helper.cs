@@ -175,5 +175,22 @@ namespace Logic
                 return false;
             }
         }
+
+        public static void PrintOptimalRoutes(State state)
+        {
+            PrintRoute("", state.OptimalDuration, state);
+        }
+
+        private static void PrintRoute(string route, int duration, State state)
+        {
+            if(state.IsFinalState)
+                Console.WriteLine(route + state.ID + " (" + duration + ")");
+
+            else
+            {
+                foreach (var dec in state.OptimalDecisions)
+                    PrintRoute(route + state.ID + " ", duration, dec.NextState);
+            }
+        }
     }
 }

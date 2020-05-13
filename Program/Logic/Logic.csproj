@@ -56,9 +56,14 @@
     <Compile Include="Task3\Path.cs" />
     <Compile Include="Task3\T3Controler.cs" />
     <Compile Include="Task3\T3Logic.cs" />
+    <Compile Include="Task4\Decision4.cs" />
+    <Compile Include="Task4\State.cs" />
+    <Compile Include="Task4\T4Controler.cs" />
+    <Compile Include="Task4\T4Logic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
