@@ -7,10 +7,11 @@ namespace TUI
     class Program
     {
         private static int task = 0;
-        private const int maxPosibbleTask = 4;
+        private const int maxPosibbleTask = 5;
 
         private static string path;
         private static List<List<string>> matrix;
+        private static List<int> roundRobinParamteres;
 
         static void ChooseTask()
         {
@@ -33,29 +34,50 @@ namespace TUI
 
         static void ChoosePath()
         {
-            Console.Write("Enter file path (or press Enter to open default): ");
-            path = Console.ReadLine();
-
-            if (path == "")
-                path = "..//../..//Data//Task" + task + ".txt";
-
-            matrix = new List<List<string>>();
-
-            using (TextReader reader = File.OpenText(path))
+            if (task != 5)
             {
-                string wholeFile = reader.ReadToEnd();
-                string[] lines = wholeFile.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                Console.Write("Enter file path (or press Enter to open default): ");
+                path = Console.ReadLine();
 
-                foreach (string line in lines)
+                if (path == "")
+                    path = "..//../..//Data//Task" + task + ".txt";
+
+                matrix = new List<List<string>>();
+
+                using (TextReader reader = File.OpenText(path))
                 {
-                    List<string> tmpRow = new List<string>();
-                    string[] numbers = line.Split(' ');
+                    string wholeFile = reader.ReadToEnd();
+                    string[] lines = wholeFile.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
-                    foreach (string number in numbers)
-                        tmpRow.Add(number);
+                    foreach (string line in lines)
+                    {
+                        List<string> tmpRow = new List<string>();
+                        string[] numbers = line.Split(' ');
 
-                    matrix.Add(tmpRow);
+                        foreach (string number in numbers)
+                            tmpRow.Add(number);
+
+                        matrix.Add(tmpRow);
+                    }
                 }
+            }
+            else
+            {
+                roundRobinParamteres = new List<int>();
+
+                Console.Write("Processes: ");
+                roundRobinParamteres.Add(int.Parse(Console.ReadLine()));
+                Queue<KeyValuePair<int, int>> processes =
+                    new Queue<KeyValuePair<int, int>>();
+
+                Console.Write("Quantum: ");
+                roundRobinParamteres.Add(int.Parse(Console.ReadLine()));
+
+                Console.Write("Min burst time: ");
+                roundRobinParamteres.Add(int.Parse(Console.ReadLine()));
+
+                Console.Write("Max burst time: ");
+                roundRobinParamteres.Add(int.Parse(Console.ReadLine()));
             }
         }
 
@@ -79,6 +101,10 @@ namespace TUI
 
                 case 4:
                     Logic.Controler.Task4(matrix);
+                    break;
+
+                case 5:
+                    Logic.Controler.Task5(roundRobinParamteres);
                     break;
             }
         }

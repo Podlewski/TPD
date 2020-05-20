@@ -60,6 +60,8 @@
     <Compile Include="Task4\State.cs" />
     <Compile Include="Task4\T4Controler.cs" />
     <Compile Include="Task4\T4Logic.cs" />
+    <Compile Include="Task5\T5Controler.cs" />
+    <Compile Include="Task5\T5Logic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
