@@ -50,7 +50,7 @@ namespace Logic
 
                 case 5:
                     Console.WriteLine("Bayes-Laplace Criterion: " +
-                        Logic.BayesLaplace(matrix, Logic.BayesLaplaceFactors(matrix.Count)));
+                        Logic.BayesLaplace(matrix, Logic.BayesLaplaceFactors(matrix[0].Count)));
                     break;
 
                 case 6:
@@ -59,7 +59,7 @@ namespace Logic
 
                 default:
                     float hurwitzFactor = Logic.HurwitzFactor();
-                    List<float> bayesLaplaceFactors = Logic.BayesLaplaceFactors(matrix.Count);
+                    List<float> bayesLaplaceFactors = Logic.BayesLaplaceFactors(matrix[0].Count);
 
                     Console.WriteLine();
 
